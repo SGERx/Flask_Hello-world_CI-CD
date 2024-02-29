@@ -56,8 +56,8 @@ jobs:
     needs: build
 
     steps:
-    - name: Check Docker image contents
-      run: echo "$(docker run --rm sgerx/flask_hello-world_ci-cd ls -al /app)"
+      - name: Check Docker image contents
+        run: echo "$(docker run --rm sgerx/flask_hello-world_ci-cd ls -al /app)"
 
       - name: List files in /app
         run: ls -al /app
