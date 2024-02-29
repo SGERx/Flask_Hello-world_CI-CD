@@ -59,9 +59,6 @@ jobs:
       - name: Check Docker image contents
         run: echo "$(docker run --rm sgerx/flask_hello-world_ci-cd ls -al /app)"
 
-      - name: List files in /app
-        run: ls -al /app
-
       - name: Set execute permission for entrypoint.sh
         run: docker exec $CONTAINER_ID chmod +x /app/entrypoint.sh
 
