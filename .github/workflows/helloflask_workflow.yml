@@ -42,7 +42,7 @@ jobs:
     steps:
     - name: Run Flask application and Stop after 10 seconds
       run: |
-        docker run -d -p 5000:5000 --name flask-app sgerx/flask_hello-world_ci-cd  ls -al /app
+        docker run -d -p 5000:5000 --name flask-app sgerx/flask_hello-world_ci-cd
         sleep 10
         curl -X POST http://127.0.0.1:5000/shutdown
       if: always()
