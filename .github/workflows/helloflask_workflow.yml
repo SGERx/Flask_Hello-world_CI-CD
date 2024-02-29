@@ -30,15 +30,11 @@ jobs:
     - name: Build Docker image
       run: docker build -t sgerx/flask_hello-world_ci-cd:latest .
 
-    - name: Run Flask application
-      run: python app.py
-
-    - name: Run Flask application
+    - name: Run Flask application and Stop after 10 seconds
       run: |
         python app.py > /dev/null 2>&1 &
-
-    - name: Stop Flask application
-      run: curl -X POST http://127.0.0.1:5000/shutdown
+        sleep 10
+        curl -X POST http://127.0.0.1:5000/shutdown
       if: always()
 
     - name: Log in to Docker Hub
