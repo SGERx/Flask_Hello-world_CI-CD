@@ -15,7 +15,7 @@ RUN chmod +x /app/entrypoint.sh
 
 LABEL maintainer="SGERx winampagent007@mail.ru"
 
-COPY your_service_file.service /etc/systemd/system/your_service_file.service
+COPY servicefile.ini /etc/systemd/system/servicefile.ini
 
 CMD ["/app/entrypoint.sh"]
 
