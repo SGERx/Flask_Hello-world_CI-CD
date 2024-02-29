@@ -33,7 +33,11 @@ jobs:
           python -m unittest discover tests
 
       - name: Build Docker image
-        run: docker build -t sgerx/flask_hello-world_ci-cd:latest .
+        run: |
+          docker build -t sgerx/flask_hello-world_ci-cd:latest .
+          echo "entrypoint.sh" > .dockerignore
+          docker cp entrypoint.sh CONTAINER_ID:/app/entrypoint.sh
+          docker commit CONTAINER_ID sgerx/flask_hello-world_ci-cd:latest
 
   app_run_and_stop:
     runs-on: ubuntu-latest
