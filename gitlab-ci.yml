@@ -1,23 +1,42 @@
 stages:
-  - build
+  - build_test_push
+  - docker_run_and_stop
+  - app_run_and_stop
 
 variables:
-  DOCKERHUB_USERNAME: $CI_REGISTRY_USER
-  DOCKERHUB_PASSWORD: $CI_JOB_TOKEN
+  DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+  DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-before_script:
-  - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD $CI_REGISTRY
+build_test_push:
+  stage: build_test_push
+  image: python:3.9
 
-build:
-  stage: build
-  image: python:3.9-slim-buster
   script:
     - pip install --upgrade pip
     - pip install -r requirements.txt
+    - pip install flake8
+    - flake8 .
     - python -m unittest discover tests
-    - docker build -t $CI_REGISTRY_IMAGE:latest .
-    - docker push $CI_REGISTRY_IMAGE:latest
-    - docker logout $CI_REGISTRY
-    - python app.py
-  only:
-    - master
+    - docker build -t sgerx/flask_hello-world_ci-cd:latest
+    - echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+    - docker tag sgerx/flask_hello-world_ci-cd:latest sgerx/flask_hello-world_ci-cd:latest
+    - docker push sgerx/flask_hello-world_ci-cd:latest
+
+docker_run_and_stop:
+  stage: docker_run_and_stop
+  image: docker:latest
+
+  script:
+    - CONTAINER_ID=$(docker run -d -p 5000:5000 --name flask-app sgerx/flask_hello-world_ci-cd)
+    - echo "CONTAINER_ID=$CONTAINER_ID" >> $CI_ENVIRONMENT_URL
+    - sleep 10
+    - docker stop $CONTAINER_ID
+
+app_run_and_stop:
+  stage: app_run_and_stop
+  image: python:3.9
+
+  script:
+    - python app.py > /dev/null 2>&1 &
+    - sleep 10
+    - curl -X POST http://127.0.0.1:5000/shutdown
