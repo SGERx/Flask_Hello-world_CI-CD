@@ -40,6 +40,7 @@ jobs:
     - name: Stop Flask application
       run: |
         pkill -f "python app.py"
+        sleep 5  # добавляем задержку в 5 секунд
       if: always()
 
     - name: Log in to Docker Hub
