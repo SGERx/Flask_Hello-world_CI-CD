@@ -51,6 +51,8 @@ jobs:
   app_run_and_stop:
     runs-on: ubuntu-latest
     needs: build
+    
+    steps:
     - name: Run Flask application and Stop after 10 seconds
       run: |
         python app.py > /dev/null 2>&1 &
