@@ -63,10 +63,11 @@ jobs:
         run: ls -al /app
 
       - name: Set execute permission for entrypoint.sh
-        run: chmod +x /app/entrypoint.sh
+        run: docker exec $CONTAINER_ID chmod +x /app/entrypoint.sh
 
-      - name: Run Tests and Flake8 using entrypoint.sh
-        run: bash /app/entrypoint.sh
+      - name: Set execute permission for entrypoint.sh
+        run: docker exec $CONTAINER_ID bash /app/entrypoint.sh
+
 
   push:
     runs-on: ubuntu-latest
