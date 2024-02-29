@@ -36,7 +36,7 @@ jobs:
         run: |
           docker build -t sgerx/flask_hello-world_ci-cd:latest .
 
-  app_run_and_stop:
+  docker_run_and_stop:
     runs-on: ubuntu-latest
     needs: build
 
@@ -45,12 +45,23 @@ jobs:
         run: |
           docker run -d -p 5000:5000 --name flask-app sgerx/flask_hello-world_ci-cd
           sleep 10
-          curl -X POST http://127.0.0.1:5000/shutdown
+          docker stop $CONTAINER_ID
         if: always()
+
+  app_run_and_stop:
+    runs-on: ubuntu-latest
+    needs: build
+    - name: Run Flask application and Stop after 10 seconds
+      run: |
+        python app.py > /dev/null 2>&1 &
+        sleep 10
+        curl -X POST http://127.0.0.1:5000/shutdown
+      if: always()
+
 
   push:
     runs-on: ubuntu-latest
-    needs: app_run_and_stop
+    needs: [docker_run_and_stop, app_run_and_stop]
 
     steps:
       - name: Log in to Docker Hub
