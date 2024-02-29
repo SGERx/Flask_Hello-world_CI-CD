@@ -73,5 +73,5 @@ jobs:
 
       - name: Push Docker image to Docker Hub
         run: |
-          docker tag sgerx/flask_hello-world_ci-cd:latest ***:flask_hello-world_ci-cd:latest
-          docker push ***:flask_hello-world_ci-cd:latest
+          docker tag sgerx/flask_hello-world_ci-cd:latest sgerx/:flask_hello-world_ci-cd:latest
+          docker push sgerx/:flask_hello-world_ci-cd:latest
