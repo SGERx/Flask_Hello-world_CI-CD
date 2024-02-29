@@ -38,3 +38,8 @@ jobs:
 
     - name: Run Flask application
       run: python app.py
+
+    - name: Stop Flask application
+      run: |
+        pkill -f "python app.py"
+      if: always()
