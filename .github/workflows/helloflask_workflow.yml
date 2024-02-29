@@ -72,6 +72,6 @@ jobs:
         run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
       - name: Push Docker image to Docker Hub
-        run: |
-          docker tag sgerx/flask_hello-world_ci-cd:latest sgerx/:flask_hello-world_ci-cd:latest
-          docker push sgerx/:flask_hello-world_ci-cd:latest
+      run: |
+        docker tag sgerx/flask_hello-world_ci-cd:latest sgerx/flask_hello-world_ci-cd:latest
+        docker push sgerx/flask_hello-world_ci-cd:latest
