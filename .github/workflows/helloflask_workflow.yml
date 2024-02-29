@@ -52,12 +52,16 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
 
-    - name: Set execute permission for entrypoint.sh
-      run: chmod +x /app/entrypoint.sh
+    jobs:
+      build_and_stop:
+        runs-on: ubuntu-latest
 
-    - name: Run Tests and Flake8 using entrypoint.sh
-      run: bash /app/entrypoint.sh
+        steps:
+          - name: Set execute permission for entrypoint.sh
+            run: chmod +x /app/entrypoint.sh
 
+          - name: Run Tests and Flake8 using entrypoint.sh
+            run: bash /app/entrypoint.sh
 
   push:
     runs-on: ubuntu-latest
