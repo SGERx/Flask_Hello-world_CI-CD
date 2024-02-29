@@ -46,7 +46,7 @@ jobs:
 
   docker_run_and_stop:
     runs-on: ubuntu-latest
-    needs: build
+    needs: build_test_push
 
     steps:
       - name: Run Flask application and wait 10 seconds
@@ -61,7 +61,7 @@ jobs:
 
   app_run_and_stop:
     runs-on: ubuntu-latest
-    needs: build
+    needs: build_test_push
 
     steps:
       - name: Run Flask application and Stop
