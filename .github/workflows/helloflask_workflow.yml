@@ -52,6 +52,12 @@ jobs:
     needs: build
 
     steps:
+    - name: Check the content of / directory
+      run: ls
+    
+    - name: Check the content of /app directory
+      run: ls -al /app
+
     - name: Set execute permission for entrypoint.sh
       run: chmod +x app/entrypoint.sh
 
