@@ -56,7 +56,7 @@ jobs:
     needs: build
 
     steps:
-      - name: Run Flask application and Stop after 10 seconds
+      - name: Run Flask application and Stop
         run: |
           python app.py > /dev/null 2>&1 &
         if: always()
@@ -72,4 +72,6 @@ jobs:
         run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
       - name: Push Docker image to Docker Hub
-        run: docker push sgerx/flask_hello-world_ci-cd:latest
+        run: |
+          docker tag sgerx/flask_hello-world_ci-cd:latest ***:flask_hello-world_ci-cd:latest
+          docker push ***:flask_hello-world_ci-cd:latest
