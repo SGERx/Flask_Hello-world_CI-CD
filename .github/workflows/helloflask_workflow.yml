@@ -52,10 +52,10 @@ jobs:
     needs: build
 
     - name: Set execute permission for entrypoint.sh
-      run: chmod +x app/entrypoint.sh
+      run: chmod +x /app/entrypoint.sh
 
     - name: Run Tests and Flake8 using entrypoint.sh
-      run: bash app/entrypoint.sh
+      run: bash /app/entrypoint.sh
 
 
   push:
