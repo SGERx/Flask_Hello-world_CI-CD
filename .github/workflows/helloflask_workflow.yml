@@ -42,4 +42,3 @@ jobs:
     - name: Run Flask application
       run: |
         python app.py &
-      background: true
