@@ -9,4 +9,6 @@ python -m unittest discover tests
 
 sleep 10
 
-pkill -f "python app.py"
+curl -X POST http://127.0.0.1:5000/shutdown
+
+# pkill -f "python app.py"
