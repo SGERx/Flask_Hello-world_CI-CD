@@ -42,7 +42,7 @@ jobs:
     steps:
     - name: Run Flask application and Stop after 10 seconds
       run: |
-        docker run -d -p 5000:5000 --name flask-app sgerx/flask_hello-world_ci-cd
+        docker run -d -p 5000:5000 --name flask-app sgerx/flask_hello-world_ci-cd  ls -al /app
         sleep 10
         curl -X POST http://127.0.0.1:5000/shutdown
       if: always()
@@ -50,13 +50,6 @@ jobs:
   bash_run_and_stop:
     runs-on: ubuntu-latest
     needs: build
-
-    steps:
-    - name: Check the content of / directory
-      run: ls
-    
-    - name: Check the content of /app directory
-      run: ls -al /app
 
     - name: Set execute permission for entrypoint.sh
       run: chmod +x app/entrypoint.sh
