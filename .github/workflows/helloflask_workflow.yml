@@ -38,9 +38,7 @@ jobs:
         python app.py > /dev/null 2>&1 &
 
     - name: Stop Flask application
-      run: |
-        pkill -f "python app.py"
-        sleep 5  # добавляем задержку в 5 секунд
+      run: curl -X POST http://127.0.0.1:5000/shutdown
       if: always()
 
     - name: Log in to Docker Hub
