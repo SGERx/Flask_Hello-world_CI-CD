@@ -47,6 +47,7 @@ jobs:
         curl -X POST http://127.0.0.1:5000/shutdown
       if: always()
 
+
   bash_run_and_stop:
     runs-on: ubuntu-latest
     needs: build
