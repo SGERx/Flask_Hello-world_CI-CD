@@ -59,7 +59,7 @@ jobs:
       - name: Run Flask application and Stop after 10 seconds
         run: |
           python app.py > /dev/null 2>&1 &
-          sleep 10
+          sleep 20
           curl -X POST http://127.0.0.1:5000/shutdown
         if: always()
 
